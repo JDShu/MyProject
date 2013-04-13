@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.content.Intent;
 import android.provider.MediaStore;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.net.Uri;
 import android.os.Environment;
 import android.graphics.BitmapFactory;
+import android.content.Intent;
 
 import android.util.Log;
 
@@ -50,8 +52,25 @@ public class MainActivity extends Activity
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.login) {
+            startLogin();
+            return true;
+        } else if (item.getItemId() == R.id.help) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public void takePicture(View view) {
         dispatchTakePictureIntent(2);
+    }
+
+    private void startLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     private void dispatchTakePictureIntent(int actionCode) {
