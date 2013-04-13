@@ -57,7 +57,8 @@ public class MainActivity extends Activity
         if (item.getItemId() == R.id.login) {
             startLogin();
             return true;
-        } else if (item.getItemId() == R.id.help) {
+        } else if (item.getItemId() == R.id.qr) {
+            startQR();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -69,6 +70,12 @@ public class MainActivity extends Activity
 
     private void startLogin() {
         Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+    private void startQR() {
+        Intent intent = new Intent(this, QRActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }

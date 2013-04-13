@@ -3,7 +3,7 @@
     <item android:id="@+id/login"
           android:title="@string/login"
           android:showAsAction="ifRoom"/>
-    <item android:id="@+id/help"
-          android:title="@string/help"
+    <item android:id="@+id/qr"
+          android:title="@string/qr"
           android:showAsAction="ifRoom"/>
 </menu>
