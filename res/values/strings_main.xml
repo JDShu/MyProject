@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MainActivity</string>
+    <string name="login">Log In</string>
+    <string name="scan_QR">Scan QR Codes</string>
+    <string name="take_photos">Photograph Items</string>
+    <string name="organize">Organize</string>
+    <string name="check_in">Check In</string>
+</resources>

@@ -36,6 +36,12 @@
             android:label="@string/scan_qr"
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
+
+        <activity
+            android:name="com.unixlab.myproject.PhotoActivity"
+            android:label="@string/take_photo"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
+        </activity>
     </application>
 
 </manifest>
