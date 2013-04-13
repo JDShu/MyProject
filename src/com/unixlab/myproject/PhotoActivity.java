@@ -26,9 +26,12 @@ import android.util.Log;
 public class PhotoActivity extends Activity
 {
     private static final String TAG = "MyActivity";
+    private static final String PICTURES_DIR = "Box/";
+    private static final String UNORGANIZED_DIR = "Unorganized/";
 
     private ImageView mImageView;
     private Bitmap mImageBitmap;
+    private File storageDir;
 
     private static final String JPEG_FILE_PREFIX = "IMG_";
     private static final String JPEG_FILE_SUFFIX = ".jpg";
@@ -42,7 +45,12 @@ public class PhotoActivity extends Activity
 
         mImageView = (ImageView) findViewById(R.id.imageView1);
         Log.d(TAG, "created in onCreate");
-        displayTmp();
+        storageDir = new File (
+                               Environment.getExternalStorageDirectory(),
+                               PICTURES_DIR
+                               + UNORGANIZED_DIR
+                               );
+        storageDir.mkdirs();
     }
 
     @Override
@@ -62,12 +70,31 @@ public class PhotoActivity extends Activity
     }
 
     private void dispatchTakePictureIntent(int actionCode) {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File f = new File("/sdcard/tmp.jpg");
-        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
-                                   Uri.fromFile(f));
-        Log.d(TAG, "About to start camera intent");
-        startActivityForResult(takePictureIntent, actionCode);
+        try {
+            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            File f = createImageFile();
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                                       Uri.fromFile(f));
+            Log.d(TAG, "About to start camera intent");
+            startActivityForResult(takePictureIntent, actionCode);
+        } catch (IOException e) {
+            Log.d(TAG, "Error while creating image file: ", e);
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        // TODO: let user name file
+        String timeStamp =
+            new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = JPEG_FILE_PREFIX + timeStamp + "_";
+        Log.d(TAG, "storageDir: " + storageDir.getAbsolutePath() + ", exists: " + storageDir.exists());
+        File image = File.createTempFile(
+                                         imageFileName,
+                                         JPEG_FILE_SUFFIX,
+                                         storageDir
+                                         );
+        return image;
     }
 
     private void displayTmp() {
@@ -109,7 +136,7 @@ public class PhotoActivity extends Activity
 
     private void handleSmallCameraPhoto(Intent intent) {
         Log.d(TAG, "Trying to handle small camera photo");
-        displayTmp();
+        //displayTmp();
     }
 
     @Override
