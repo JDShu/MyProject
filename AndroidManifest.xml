@@ -34,14 +34,11 @@
         </activity>
         <activity
             android:name="com.unixlab.myproject.QRActivity"
-            android:label="@string/scan_qr"
-            android:windowSoftInputMode="adjustResize|stateVisible" >
+            android:label="@string/scan_qr">
         </activity>
-
         <activity
             android:name="com.unixlab.myproject.PhotoActivity"
-            android:label="@string/take_photo"
-            android:windowSoftInputMode="adjustResize|stateVisible" >
+            android:label="@string/take_photo">
         </activity>
     </application>
 
