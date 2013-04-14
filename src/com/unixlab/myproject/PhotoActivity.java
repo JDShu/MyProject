@@ -44,7 +44,6 @@ public class PhotoActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo);
 
-        Log.d(TAG, "created in onCreate");
         storageDir = new File (
                                Environment.getExternalStorageDirectory(),
                                PICTURES_DIR
@@ -86,7 +85,6 @@ public class PhotoActivity extends Activity
             File f = createImageFile();
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
                                        Uri.fromFile(f));
-            Log.d(TAG, "About to start camera intent");
             startActivityForResult(takePictureIntent, actionCode);
         } catch (IOException e) {
             Log.d(TAG, "Error while creating image file: ", e);
@@ -99,23 +97,11 @@ public class PhotoActivity extends Activity
         String timeStamp =
             new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = JPEG_FILE_PREFIX + timeStamp + "_";
-        Log.d(TAG, "storageDir: " + storageDir.getAbsolutePath() + ", exists: " + storageDir.exists());
         File image = File.createTempFile(
                                          imageFileName,
                                          JPEG_FILE_SUFFIX,
                                          storageDir
                                          );
         return image;
-    }
-
-    private void handleSmallCameraPhoto(Intent intent) {
-        Log.d(TAG, "Trying to handle small camera photo");
-        //displayTmp();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(TAG, "in onActivityResult");
-        handleSmallCameraPhoto(data);
     }
 }
