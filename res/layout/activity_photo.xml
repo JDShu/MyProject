@@ -4,17 +4,20 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     >
-<Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/take_photo"
-    android:onClick="takePicture"/>
-<ImageView
-    android:layout_height="fill_parent"
+  <Button
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/take_photo"
+      android:onClick="takePicture"/>
+  <GridView
+    android:id="@+id/gallery"
     android:layout_width="fill_parent"
-    android:visibility="visible"
+    android:layout_height="fill_parent"
     android:layout_weight="1"
-    android:adjustViewBounds="true"
-    android:id="@+id/imageView1" />
+    android:columnWidth="90dp"
+    android:numColumns="auto_fit"
+    android:verticalSpacing="10dp"
+    android:horizontalSpacing="10dp"
+    android:stretchMode="columnWidth"
+    android:gravity="center"/>
 </LinearLayout>
-

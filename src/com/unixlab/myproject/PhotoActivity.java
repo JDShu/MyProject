@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.GridView;
 import android.content.Intent;
 import android.provider.MediaStore;
 import android.graphics.Bitmap;
@@ -43,7 +44,6 @@ public class PhotoActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo);
 
-        mImageView = (ImageView) findViewById(R.id.imageView1);
         Log.d(TAG, "created in onCreate");
         storageDir = new File (
                                Environment.getExternalStorageDirectory(),
@@ -51,6 +51,17 @@ public class PhotoActivity extends Activity
                                + UNORGANIZED_DIR
                                );
         storageDir.mkdirs();
+
+        /* Gallery of items we currently have images of */
+        GridView gallery = (GridView) findViewById(R.id.gallery);
+        gallery.setAdapter(new ImageAdapter(this, storageDir));
+
+        // TODO: click for item details
+        /*gallery.setOnItemClickListener(new OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                    Toast.makeText(HelloGridView.this, "" + position, Toast.LENGTH_SHORT).show();
+                }
+                });*/
     }
 
     @Override
@@ -95,43 +106,6 @@ public class PhotoActivity extends Activity
                                          storageDir
                                          );
         return image;
-    }
-
-    private void displayTmp() {
-        Log.d(TAG, "Trying to display tmp");
-        File f = new File("/sdcard/tmp.jpg");
-        Log.d(TAG, "read file");
-        if(f.exists()){
-            Log.d(TAG, "about to decode file: " + f.getAbsolutePath());
-            // Get the dimensions of the View
-            int targetW = mImageView.getWidth();
-            int targetH = mImageView.getHeight();
-
-            Log.d(TAG, "got dimensions");
-            // Get the dimensions of the bitmap
-            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-            bmOptions.inJustDecodeBounds = true;
-
-            Log.d(TAG, "about to decode for first time");
-            BitmapFactory.decodeFile(f.getAbsolutePath(), bmOptions);
-            int photoW = bmOptions.outWidth;
-            int photoH = bmOptions.outHeight;
-
-            Log.d(TAG, "decoded " + photoW + "/" + targetW);
-            // Determine how much to scale down the image
-            int scaleFactor = 10;//Math.min(photoW/targetW, photoH/targetH);
-
-            Log.d(TAG, "about to get bounds");
-            // Decode the image file into a Bitmap sized to fill the View
-            bmOptions.inJustDecodeBounds = false;
-            bmOptions.inSampleSize = scaleFactor;
-            bmOptions.inPurgeable = true;
-
-            Log.d(TAG, "about to decode for second time");
-            Bitmap myBitmap = BitmapFactory.decodeFile(f.getAbsolutePath(), bmOptions);
-            Log.d(TAG, "test: " + myBitmap);
-            mImageView.setImageBitmap(myBitmap);
-        }
     }
 
     private void handleSmallCameraPhoto(Intent intent) {

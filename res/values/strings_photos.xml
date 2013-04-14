@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="take_photo">Take Photo</string>
-    <string name="album_name">MyCamera</string>
 </resources>
