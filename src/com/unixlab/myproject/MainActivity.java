@@ -20,12 +20,13 @@ import android.net.Uri;
 import android.os.Environment;
 import android.graphics.BitmapFactory;
 import android.content.Intent;
-
+import android.content.SharedPreferences;
 import android.util.Log;
 
 public class MainActivity extends Activity
 {
     private static final String TAG = "MyActivity";
+    private SharedPreferences mPreferences;
 
     /** Called when the activity is first created. */
     @Override
@@ -33,6 +34,7 @@ public class MainActivity extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mPreferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
     }
 
     @Override
@@ -45,6 +47,18 @@ public class MainActivity extends Activity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (mPreferences.contains("AuthToken")) {
+            Log.d(TAG, "Token Acquired: " + mPreferences.getString("AuthToken","Error"));
+        } else {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivityForResult(intent, 0);
+        }
     }
 
     public void startLogin(View view) {
